@@ -16,7 +16,7 @@ def sandPhys(cells,grid,screen):
     cols = int(width/step) - 1
 
     for x in range(len(cells)):
-        if cells[x][1] < rows and not grid[cells[x][0]][cells[x][1]+1][0]:
+        if cells[x][1] < rows and not grid[cells[x][0]][cells[x][1]+1][0]: #Can the sand go down?
             grid[cells[x][0]][cells[x][1]][0] = False
             grid[cells[x][0]][cells[x][1]+1][0] = True
             
@@ -24,24 +24,21 @@ def sandPhys(cells,grid,screen):
             updateScreen(screen,(cells[x][0]*step,(cells[x][1]-1)*step), black)
             updateScreen(screen,(cells[x][0]*step,cells[x][1]*step), sand)
 
-        elif cells[x][0] < cols and cells[x][1] < rows:
-            if not grid[cells[x][0]+1][cells[x][1]][0] and not grid[cells[x][0]+1][cells[x][1]+1][0]:
-                grid[cells[x][0]][cells[x][1]][0] = False
-                grid[cells[x][0]+1][cells[x][1]][0] = True
-                
-                cells[x][0] = cells[x][0] + 1
-                updateScreen(screen,((cells[x][0]-1)*step,cells[x][1]*step), black)
-                updateScreen(screen,(cells[x][0]*step,cells[x][1]*step), sand)
+        elif cells[x][0] < cols and cells[x][1] < rows and not grid[cells[x][0]+1][cells[x][1]][0] and not grid[cells[x][0]+1][cells[x][1]+1][0]: #Can the sand go right?
+            grid[cells[x][0]][cells[x][1]][0] = False
+            grid[cells[x][0]+1][cells[x][1]][0] = True
+            
+            cells[x][0] = cells[x][0] + 1
+            updateScreen(screen,((cells[x][0]-1)*step,cells[x][1]*step), black)
+            updateScreen(screen,(cells[x][0]*step,cells[x][1]*step), sand)
 
-        elif cells[x][0] > 0 and cells[x][1] < rows:
-            print("here")
-            if not grid[cells[x][0]-1][cells[x][1]][0] and not grid[cells[x][0]-1][cells[x][1]+1][0]:
-                grid[cells[x][0]][cells[x][1]][0] = False
-                grid[cells[x][0]-1][cells[x][1]][0] = True
-                
-                cells[x][0] = cells[x][0] - 1
-                updateScreen(screen,((cells[x][0]+1)*step,cells[x][1]*step), black)
-                updateScreen(screen,(cells[x][0]*step,cells[x][1]*step), sand)
+        elif cells[x][0] > 0 and cells[x][1] < rows and not grid[cells[x][0]-1][cells[x][1]][0] and not grid[cells[x][0]-1][cells[x][1]+1][0]: #Can the sand go left?
+            grid[cells[x][0]][cells[x][1]][0] = False
+            grid[cells[x][0]-1][cells[x][1]][0] = True
+            
+            cells[x][0] = cells[x][0] - 1
+            updateScreen(screen,((cells[x][0]+1)*step,cells[x][1]*step), black)
+            updateScreen(screen,(cells[x][0]*step,cells[x][1]*step), sand)
 
         
 
